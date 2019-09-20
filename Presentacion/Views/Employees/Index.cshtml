@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+<link href="~/Content/Searchstyle.css" rel="stylesheet" />
+
+<div class="container search-table">
+    <div class="search-box">
+        <div class="row">
+            <div class="col-md-3">
+                <h2>Empleados</h2>
+                <input type="text" id="idemployedtxt" class="form-control" placeholder="Identificación del empleado"><br/>
+                <button id="btnQueryEmployed" type="button" class="btn btn-success form-inline">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="divsearchlist" class="search-list hidden">
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Contract Type</th>
+                    <th>Hourly Salary</th>
+                    <th>Montly Salary</th>
+                    <th>Annual Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btnQueryEmployed").click(function () {
+            SearchFuncions.SearchEmployee();
+        });
+    });
+    var SearchFuncions = {
+        SearchEmployee: function () {
+            $("#btnQueryEmployed").prop('disabled', true);
+            let employeeid = $("#idemployedtxt").val();
+            SearchFuncions.RequestEmployees(employeeid);
+        },
+        RequestEmployees: function (employeeid) {
+            let url = "https://localhost:44300/api/employeesapi" + "/" + employeeid;
+            $.ajax({
+                url: url,
+                success: function (response) {
+                    SearchFuncions.ShowResult(response);
+                    $("#btnQueryEmployed").prop('disabled', false);
+                },
+                error: function () {
+                    swal("Error!", "No se encontró la información solicitada", "error");
+                    $("#btnQueryEmployed").prop('disabled', false);
+                }
+            });
+        },
+        ShowResult: function (result) {
+            $("#divsearchlist").removeClass("hidden");
+            $("#myTable tbody").empty();
+            if (result.length > 0 && result[0] != null) {
+                for (let k = 0; k <= result.length - 1; k++) {
+                    let row;
+                    row = document.createElement("tr");
+                    row.innerHTML = "<td>" + result[k].id + "</td><td>" + result[k].name + "</td><td>" + result[k].contractTypeName + "</td><td>" + result[k].hourlySalary + "</td> <td>" + result[k].monthlySalary + "</td> <td>" + result[k].annualSalary + "</td>";
+                    $("#myTable tbody").append(row);
+                }
+            }
+            else {
+                swal("Error", "No se encontraron registros!", "error");
+            }
+        }
+    };
+</script>

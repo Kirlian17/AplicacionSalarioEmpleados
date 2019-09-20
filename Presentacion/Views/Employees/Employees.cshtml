@@ -1,0 +1,61 @@
+﻿@model ModeloDatos.Employees
+
+@{
+    ViewBag.Title = "Employees";
+}
+
+<h2>View</h2>
+
+<table class="table">
+    <th>ID</th>
+    <th>Name</th>
+    <th>Contract Type Name</th>
+    <th>Role ID</th>
+    <th>Role Name</th>
+    <th>Role Description</th>
+    <th>Hourly Salary</th>
+    <th>Monthly Salary</th>
+    <th>Anual Salary</th>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.id)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.name)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.contractTypeName)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.roleId)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.roleName)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.roleDescription)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.hourlySalary)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.monthlySalary)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.annualSalary)
+        </td>
+    </tr>
+</table>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Back to List", "Index")*@
+</p>

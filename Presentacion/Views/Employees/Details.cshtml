@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+<link href="~/Content/Searchstyle.css" rel="stylesheet" />
+
+<div class="container search-table">
+    <div class="search-box">
+        <div class="row">
+            <div class="col-md-3">
+                <h5>Search Employees</h5>
+            </div>
+            <div class="col-md-7">
+                <input type="text" id="txtemployeeid" class="form-control" placeholder="Search Employee by Id">
+            </div>
+            <div class="col-md-2">
+                <button id="btnSearchEmployees" type="button" class="btn btn-primary form-inline">Search</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="divsearchlist" class="search-list hidden">
+        <h3><span id="spnrecordsfound">0</span> Records Found</h3>
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Contract Type</th>
+                    <th>Hourly Salary</th>
+                    <th>Montly Salary</th>
+                    <th>Annual Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btnSearchEmployees").click(function () {
+            SearchFuncions.SearchEmployee();
+        });
+    });
+    var SearchFuncions = {
+        SearchEmployee: function () {
+            $("#btnSearchEmployees").prop('disabled', true);
+            let employeeid = $("#txtemployeeid").val();
+            SearchFuncions.RequestEmployees(employeeid);
+        },
+        RequestEmployees: function (employeeid) {
+            let url = "https://localhost:44300/api/employeesapi" + employeeid;
+            $.ajax({
+                url: url,
+                success: function (response) {
+                    SearchFuncions.ShowResult(response);
+                    $("#btnSearchEmployees").prop('disabled', false);
+                },
+                error: function () {
+                    swal("Error!", "The information could not be obtained!", "error");
+                    $("#btnSearchEmployees").prop('disabled', false);
+                }
+            });
+        },
+        ShowResult: function (result) {
+            $("#divsearchlist").removeClass("hidden");
+            $("#myTable tbody").empty();
+            if (result.length > 0 && result[0] != null) {
+                $("#spnrecordsfound").html(result.length);
+                for (let k = 0; k <= result.length - 1; k++) {
+                    let row;
+                    row = document.createElement("tr");
+                    row.innerHTML = "<td>" + result[k].id + "</td><td>" + result[k].name + "</td><td>" + result[k].contractTypeName + "</td><td>" + result[k].hourlySalary + "</td> <td>" + result[k].monthlySalary + "</td> <td>" + result[k].annualsalary + "</td>";
+                    $("#myTable tbody").append(row);
+                }
+            }
+            else {
+                $("#spnrecordsfound").html(0);
+                swal("info!", "No records Found!", "info");
+            }
+        }
+    };
+</script>

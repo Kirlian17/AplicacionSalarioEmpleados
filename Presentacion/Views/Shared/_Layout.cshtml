@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/Content/css/flaticon.css" />
+    <link rel="stylesheet" href="~/Content/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/Content/css/style.css" />
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Aplicación empleados", "Inicio", "Acerca de", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Acerca de nosotros</a></li>
+                    <li><a href="#">Servicios</a></li>
+                    <li><a href="#">Nuevo</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Contact section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 contact-text">
+                    <img src="~/Content/img/logo.png" alt="logo">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </section><br/><br />
+    <!-- Contact section end -->
+
+    <!-- Footer top section -->
+    <section class="footer-top-section text-white spad">
+        <div class="container">
+                <div class="copyRightText">
+                    <p>© 2019 Copyright Kirlian Cadavid Carvalho</p>
+                </div>
+        </div>
+    </section>
+    <!-- Footer top section end -->
+    <!-- Footer section -->
+    <footer class="footer-section">
+        <div class="container">
+           
+        </div>
+    </footer>
+    <!-- Footer top section end -->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <!--====== Javascripts & Jquery ======-->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="~/Content/js/owl.carousel.min.js"></script>
+    <script src="~/Content/js/circle-progress.min.js"></script>
+    <script src="~/Content/js/main.js"></script>
+
+</body>
+</html>
